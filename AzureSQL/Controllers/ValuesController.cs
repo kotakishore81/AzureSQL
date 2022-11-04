@@ -66,6 +66,10 @@ namespace AzureSQL.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+        //services.AddHttpsRedirection(options =>
+			//{
+			//	options.HttpsPort = 443;
+		//	});
         }
 
         // DELETE api/<ValuesController>/5
