@@ -53,7 +53,7 @@ namespace AzureSQL.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "value";          
         }
 
         // POST api/<ValuesController>
@@ -66,6 +66,10 @@ namespace AzureSQL.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+        //services.AddHttpsRedirection(options =>
+			//{
+			//	options.HttpsPort = 443;
+		//	});
         }
 
         // DELETE api/<ValuesController>/5
