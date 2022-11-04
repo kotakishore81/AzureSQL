@@ -11,12 +11,6 @@ namespace AzureSQL.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-       // public string Email { get; set; }
-       // public string Email { get; set; }
-       // services.AddHttpsRedirection(options =>
-			//{
-			//	options.HttpsPort = 443;
-		//	});
         public string PhoneNumber { get; set; }
     }
 }
