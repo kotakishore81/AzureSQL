@@ -54,6 +54,10 @@ namespace AzureSQL.Controllers
         public string Get(int id)
         {
             return "value";
+            //services.AddHttpsRedirection(options =>
+			//{
+			//	options.HttpsPort = 443;
+			//});
         }
 
         // POST api/<ValuesController>
