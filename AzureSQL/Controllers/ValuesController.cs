@@ -43,6 +43,7 @@ namespace AzureSQL.Controllers
                         PhoneNumber = reader["PhoneNumber"].ToString(),
                     };
                     employees.Add(employee);
+                    // options.HttpsPort = 443;
                 }
             }
             return employees;
