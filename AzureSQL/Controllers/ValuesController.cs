@@ -1,9 +1,12 @@
-﻿using AzureSQL.Model;
+﻿using Azure.Storage.Blobs;
+using AzureSQL.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +19,8 @@ namespace AzureSQL.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private string _connectionString = "DefaultEndpointsProtocol=https;AccountName=kmkstorageaccount;AccountKey=MMVUhsL4em71Wcr9iRCHF33jzNs1RLNObSQWGoL591q09j/EEB1P6ab5SIR7PKDXazKjojP86L4t+AStopa/Zg==;EndpointSuffix=core.windows.net";
+        private string _containerName = "readblobcontainer";
         public ValuesController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -51,8 +56,41 @@ namespace AzureSQL.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public void Get(int id)
         {
+           
+            
+            string folderPath = @"C:\Users\003PT8744\Desktop\bills";
+            var files = Directory.GetFiles(folderPath, "*", System.IO.SearchOption.AllDirectories);
+            //BlobServiceClient Serviceclient = new BlobServiceClient(_connectionString);
+            //BlobContainerClient containerClient = Serviceclient.GetBlobContainerClient(_containerName);
+
+            BlobContainerClient containerClient = new BlobContainerClient(_connectionString, _containerName);
+            foreach (var file in files) {
+                var filePathOverCloud = file.Replace(folderPath, string.Empty);
+                using (MemoryStream strem = new MemoryStream(System.IO.File.ReadAllBytes(file))) {
+                    containerClient.UploadBlob(filePathOverCloud, strem);
+                }
+            }
+
+            //BlobClient blobclient = containerClient.GetBlobClient("Tax_App_Unit_Testing_1.xlsx");
+            //blobclient.DownloadTo(@"C:\Users\003PT8744\Downloads\abc1.xlsx");
+
+            //return "value";
+        }
+
+        [HttpGet("{id}")]
+        public string GetFiles(int id)
+        {
+
+
+            string folderPath = @"C:\Users\003PT8744\Desktop\bills";
+            var files = Directory.GetFiles(folderPath, "*", System.IO.SearchOption.AllDirectories);
+            BlobServiceClient Serviceclient = new BlobServiceClient(_connectionString);
+            BlobContainerClient containerClient = Serviceclient.GetBlobContainerClient(_containerName);
+            BlobClient blobclient = containerClient.GetBlobClient("Tax_App_Unit_Testing_1.xlsx");
+            blobclient.DownloadTo(@"C:\Users\003PT8744\Downloads\abc1.xlsx");
+
             return "value";
         }
 
